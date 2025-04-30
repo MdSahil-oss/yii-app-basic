@@ -5,6 +5,11 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+      - "README"
+      - "README.*"
 
 env:
   IMAGE_NAME: mdsahiloss/yii2-app-basic
