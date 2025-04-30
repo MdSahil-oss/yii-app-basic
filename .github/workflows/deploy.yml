@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_NAME: mdsahiloss/yii2-app-basic
   IMAGE_TAG: ${{ github.sha }}
-  SERVICE_NAME: yii2-basic-app
+  SERVICE_NAME: yii2app
 
 jobs:
   deploy:
@@ -36,4 +36,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull $IMAGE_NAME:$IMAGE_TAG
-            docker service update --image $IMAGE_NAME:$IMAGE_TAG $SERVICE_NAME
+            docker service update --image "$IMAGE_NAME:$IMAGE_TAG" $SERVICE_NAME
