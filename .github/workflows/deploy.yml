@@ -36,8 +36,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             script: |
-            docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-            docker service update \
+            sudo docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            sudo docker service update \
               --image ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
               --with-registry-auth \
               --force \
