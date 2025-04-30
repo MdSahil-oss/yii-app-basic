@@ -9,7 +9,7 @@ on:
 env:
   IMAGE_NAME: mdsahiloss/yii2-app-basic
   IMAGE_TAG: ${{ github.sha }}
-  SERVICE_NAME: yii2app
+  SERVICE_NAME: yii2app_yii2-app
 
 jobs:
   deploy:
