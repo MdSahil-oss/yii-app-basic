@@ -35,5 +35,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull $IMAGE_NAME:$IMAGE_TAG
-            docker service update --image "$IMAGE_NAME:$IMAGE_TAG" $SERVICE_NAME
+            script: |
+            docker pull ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            docker service update \
+              --image ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
+              --with-registry-auth \
+              --force \
+              ${{ env.SERVICE_NAME }}
