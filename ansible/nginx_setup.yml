@@ -1,0 +1,21 @@
+---
+- name: Set up NGINX for reverse proxy
+  hosts: all
+  become: true
+  tasks:
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Copy NGINX config
+      copy:
+        src: files/default.conf
+        dest: /etc/nginx/sites-available/default
+        mode: 0644
+
+    - name: Restart NGINX
+      service:
+        name: nginx
+        state: restarted

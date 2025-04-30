@@ -1,0 +1,3 @@
+app_repo: "https://github.com/MdSahil-oss/yii-app-basic.git"
+app_dir: "/opt/yii-app-basic"
+domain_name: "140.245.236.108"  # replace with actual domain

@@ -1,0 +1,38 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+env:
+  IMAGE_NAME: mdsahiloss/yii2-app-basic
+  SERVICE_NAME: yii2-basic-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:latest .
+
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME:latest
+
+      - name: SSH and update Swarm service
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 140.245.236.108
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull $IMAGE_NAME:latest
+            docker service update --image $IMAGE_NAME:latest $SERVICE_NAME

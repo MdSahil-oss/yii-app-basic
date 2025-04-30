@@ -1,0 +1,26 @@
+---
+- name: Deploy Yii2 app as a Swarm service
+  hosts: all
+  become: true
+  tasks:
+    - name: Create a Docker stack file
+      copy:
+        dest: /opt/yii-app-basic/docker-compose.yml
+        content: |
+          version: '3.8'
+          services:
+            yii2-app:
+              image: php:8.1-apache
+              ports:
+                - "8080:80"
+              volumes:
+                - .:/var/www/html
+              working_dir: /var/www/html
+              deploy:
+                replicas: 1
+                restart_policy:
+                  condition: on-failure
+
+    - name: Deploy the stack
+      shell: docker stack deploy -c /opt/yii-app-basic/docker-compose.yml yii2app
+

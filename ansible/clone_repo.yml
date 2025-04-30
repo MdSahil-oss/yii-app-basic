@@ -1,0 +1,16 @@
+---
+- name: Clone Yii2 app repo
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+        update_cache: true
+
+    - name: Clone Yii2 repository
+      git:
+        repo: "{{ app_repo }}"
+        dest: "{{ app_dir }}"
+        update: yes
