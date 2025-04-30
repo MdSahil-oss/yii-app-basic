@@ -8,6 +8,7 @@ on:
 
 env:
   IMAGE_NAME: mdsahiloss/yii2-app-basic
+  IMAGE_TAG: ${{ github.sha }}
   SERVICE_NAME: yii2-basic-app
 
 jobs:
@@ -22,17 +23,17 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t $IMAGE_NAME:latest .
+        run: docker build -t $IMAGE_NAME:$IMAGE_TAG .
 
       - name: Push Docker image
-        run: docker push $IMAGE_NAME:latest
+        run: docker push $IMAGE_NAME:$IMAGE_TAG
 
       - name: SSH and update Swarm service
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: 140.245.236.108
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull $IMAGE_NAME:latest
-            docker service update --image $IMAGE_NAME:latest $SERVICE_NAME
+            docker pull $IMAGE_NAME:$IMAGE_TAG
+            docker service update --image $IMAGE_NAME:$IMAGE_TAG $SERVICE_NAME

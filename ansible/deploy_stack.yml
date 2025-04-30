@@ -10,17 +10,30 @@
           version: '3.8'
           services:
             yii2-app:
-              image: php:8.1-apache
+              image: mdsahiloss/yii2-app-basic:1.0  # or use a specific tag like :abc1234
               ports:
                 - "8080:80"
+              restart: always
+              environment:
+                - APP_ENV=production
+                - DB_HOST=db
+                - DB_PORT=3306
+                - DB_NAME=yii2
+                - DB_USER=root
+                - DB_PASS=secret
+              depends_on:
+                - db
+
+            db:
+              image: mysql:5.7
+              restart: always
+              environment:
+                MYSQL_DATABASE: yii2
+                MYSQL_ROOT_PASSWORD: secret
               volumes:
-                - .:/var/www/html
-              working_dir: /var/www/html
-              deploy:
-                replicas: 1
-                restart_policy:
-                  condition: on-failure
+                - db_data:/var/lib/mysql
+          volumes:
+            db_data:
 
     - name: Deploy the stack
       shell: docker stack deploy -c /opt/yii-app-basic/docker-compose.yml yii2app
-
