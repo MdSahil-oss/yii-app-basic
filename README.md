@@ -29,6 +29,6 @@ docker compose up
 
 # Visit latest deployed application
 
-To test Deployment Visit here: http://68.233.101.32/
+To test Deployment Visit here: http://140.245.241.35/
 
-If don't want to use Nginx proxy directly want to access application using docker port-forwarded port visit here: http://68.233.101.32:8080/
+If don't want to use Nginx proxy directly want to access application using docker port-forwarded port visit here: http://140.245.241.35:8080/

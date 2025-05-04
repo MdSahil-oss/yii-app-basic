@@ -3,6 +3,8 @@
   hosts: all
   become: true
   tasks:
+    - name: Deploy the stack
+      shell: $([ ! -d "/opt/yii-app-basic/" ] && sudo mkdir -p "/opt/yii-app-basic/")
     - name: Create a Docker stack file
       copy:
         dest: /opt/yii-app-basic/docker-compose.yml
