@@ -1,6 +1,21 @@
-# Neccessary file paths
+# Repository structure
 
 - **Ansible configs**: `ansible/` (includes Inverntory & Playbooks)
+
+  ```bash
+  ansible/
+    ├── clone_repo.yml
+    ├── deploy_stack.yml
+    ├── docker_setup.yml
+    ├── files
+    │   └── default.conf # Nginx config file
+    ├── group_vars
+    │   └── all.yml
+    ├── inventory.ini
+    ├── nginx_setup.yml
+    └── swarm_setup.yml
+  ```
+
 - **Nginx config**: `ansible/files/default.conf`
 - **Docker configs**: `Dockerfile`, `docker-compose.yml`
 - **Github Actions**: `.github/workflows/deploy.yml`
